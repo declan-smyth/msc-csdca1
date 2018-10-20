@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BPCalculator
 {
@@ -9,7 +8,8 @@ namespace BPCalculator
         [Display(Name="Low Blood Pressure")] Low,
         [Display(Name="Normal Blood Pressure")]  Normal,
         [Display(Name="Pre-High Blood Pressure")] PreHigh,
-        [Display(Name ="High Blood Pressure")]  High
+        [Display(Name ="High Blood Pressure - Stage 1")]  High1,
+        [Display(Name ="High Blood Pressure - Stage 2")] High2
     };
 
     public class BloodPressure
@@ -30,9 +30,32 @@ namespace BPCalculator
         {
             get
             {
-                // implement as part of project
-                throw new NotImplementedException("not implemented yet");
-            }
+                if ((Systolic >= SystolicMin && Systolic < 90) && (Diastolic >= DiastolicMin && Diastolic < 60))
+                {
+                    return BPCategory.Low;
+                }
+                else if ((Systolic >= 90 && Systolic <120) && (Diastolic >=60 && Diastolic < 80))
+                {
+                    return BPCategory.Normal;
+                }
+                else if ((Systolic >= 120 && Systolic < 129) && Diastolic < 80)
+                {
+                    return BPCategory.PreHigh;
+                }
+                else if ((Systolic >=130 && Systolic <= 139) || (Diastolic >= 80 && Diastolic <= 89))
+                {
+                    return BPCategory.High1;
+                }
+                else if ((Systolic >=140 ) || (Diastolic >=90))
+                {
+                    return BPCategory.High2;
+                }
+                else
+                {
+                    throw new System.Exception("Diastolic and Systolic values are not valid");
+                }
+
+             }
         }
     }
 }
