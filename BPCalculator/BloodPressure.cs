@@ -7,9 +7,10 @@ namespace BPCalculator
     {
         [Display(Name="Low Blood Pressure")] Low,
         [Display(Name="Normal Blood Pressure")]  Normal,
-        [Display(Name="Pre-High Blood Pressure")] PreHigh,
+        [Display(Name="Elevated Blood Pressure")] Elevated,
         [Display(Name ="High Blood Pressure - Stage 1")]  High1,
-        [Display(Name ="High Blood Pressure - Stage 2")] High2
+        [Display(Name ="High Blood Pressure - Stage 2")] High2,
+        [Display(Name ="Hypertensive Crisis")] Crisis
     };
 
     public class BloodPressure
@@ -17,7 +18,7 @@ namespace BPCalculator
         public const int SystolicMin = 70;
         public const int SystolicMax = 190;
         public const int DiastolicMin = 40;
-        public const int DiastolicMax = 100;
+        public const int DiastolicMax = 130;
 
         [Range(SystolicMin, SystolicMax, ErrorMessage = "Invalid Systolic Value")]
         public int Systolic { get; set; }                       // mmHG
@@ -30,32 +31,46 @@ namespace BPCalculator
         {
             get
             {
-                if ((Systolic >= SystolicMin && Systolic < 90) && (Diastolic >= DiastolicMin && Diastolic < 60))
+               if (this.Diastolic < 80)
                 {
-                    return BPCategory.Low;
+                    if (this.Systolic < 120)
+                    {
+                        return BPCategory.Normal;
+                    }
+                    else if (this.Systolic >= 120 & this.Systolic < 130)
+                    {
+                        return BPCategory.Elevated;
+                    }
+                    else
+                    {
+                        if (this.Systolic >= 130 & this. Systolic < 140)
+                        {
+                            return BPCategory.High1;
+                        }
+                        else if (this.Systolic >= 140 & this.Systolic <= 180)
+                        {
+                            return BPCategory.High2;
+                        }
+                        else
+                        {
+                            return BPCategory.Crisis;
+                        }
+                    }
                 }
-                else if ((Systolic >= 90 && Systolic <120) && (Diastolic >=60 && Diastolic < 80))
-                {
-                    return BPCategory.Normal;
-                }
-                else if ((Systolic >= 120 && Systolic < 129) && Diastolic < 80)
-                {
-                    return BPCategory.PreHigh;
-                }
-                else if ((Systolic >=130 && Systolic <= 139) || (Diastolic >= 80 && Diastolic <= 89))
+               else if (this.Diastolic >= 80 & this.Diastolic < 90)
                 {
                     return BPCategory.High1;
                 }
-                else if ((Systolic >=140 ) || (Diastolic >=90))
+                else if (this.Diastolic >= 90 & this.Diastolic <= 120)
                 {
                     return BPCategory.High2;
                 }
                 else
                 {
-                    throw new System.Exception("Diastolic and Systolic values are not valid");
+                    return BPCategory.Crisis;
                 }
 
-             }
+            }
         }
     }
 }
