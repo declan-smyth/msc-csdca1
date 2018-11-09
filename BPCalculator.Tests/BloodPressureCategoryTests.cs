@@ -2,18 +2,18 @@ using System;
 using Xunit;
 using BPCalculator;
 
-namespace UnitTestBloodPressure
+namespace BPCalculator.UnitTest.BloodPressure
 {
     public class BloodPressureCategoryTests
     {
-        public BloodPressure BP;
+        public BPCalculator.BloodPressure BP;
 
         [Theory]
         [InlineData(119,79)]
         [InlineData(111,75)]
         public void Test_for_normal_values(int s, int d)
         {
-            BP = new BloodPressure() { Systolic = s, Diastolic = d };
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
             Assert.Equal(BPCalculator.BPCategory.Normal, BP.Category);
         }
 
@@ -21,7 +21,7 @@ namespace UnitTestBloodPressure
         [InlineData(124,79)]
         public void Test_for_elevated_values(int s, int d)
         {
-            BP = new BloodPressure() { Systolic = s, Diastolic = d };
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
             Assert.Equal(BPCalculator.BPCategory.Elevated, BP.Category);
         }
 
@@ -35,7 +35,7 @@ namespace UnitTestBloodPressure
         [InlineData(181, 121)]
         public void Test_for_crisis_values(int s, int d)
         {
-            BP = new BloodPressure() { Systolic = s, Diastolic = d };
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
             Assert.Equal(BPCalculator.BPCategory.Crisis, BP.Category);
         }
 
@@ -46,7 +46,7 @@ namespace UnitTestBloodPressure
         [InlineData(139, 89)]
         public void Test_for_high1_values(int s, int d)
         {
-            BP = new BloodPressure() { Systolic = s, Diastolic = d };
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
             Assert.Equal(BPCalculator.BPCategory.High1, BP.Category);
         }
 
@@ -58,8 +58,8 @@ namespace UnitTestBloodPressure
         [InlineData(140, 98)]
         public void Test_for_high2_values(int s, int d)
         {
-            BP = new BloodPressure() { Systolic = s, Diastolic = d };
-            Assert.InRange(d, BloodPressure.DiastolicMin, BloodPressure.DiastolicMax);
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
+            Assert.InRange(d, BPCalculator.BloodPressure.DiastolicMin, BPCalculator.BloodPressure.DiastolicMax);
             Assert.Equal(BPCalculator.BPCategory.High2, BP.Category);
         }
 
@@ -68,7 +68,7 @@ namespace UnitTestBloodPressure
         {
             int s = 130;
             int d = 150;
-            BP = new BloodPressure() { Systolic = s, Diastolic = d };
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
             Assert.Throws<System.Exception>(() => BP.Category);            
         }
     }
