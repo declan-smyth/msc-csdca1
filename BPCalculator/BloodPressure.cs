@@ -31,6 +31,14 @@ namespace BPCalculator
         {
             get
             {
+                //
+                // Validate data...
+                //
+                if (this.Systolic < this.Diastolic) { throw new System.Exception(); }
+
+                //
+                // Calculate the Category
+                //
                if (this.Diastolic < 80)
                 {
                     if (this.Systolic < 120)
@@ -57,6 +65,10 @@ namespace BPCalculator
                         }
                     }
                 }
+               else if (this.Systolic > 180 )
+                {
+                    return BPCategory.Crisis;
+                }
                else if (this.Diastolic >= 80 & this.Diastolic < 90)
                 {
                     return BPCategory.High1;
@@ -69,7 +81,7 @@ namespace BPCalculator
                 {
                     return BPCategory.Crisis;
                 }
-
+               
             }
         }
     }
