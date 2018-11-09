@@ -8,11 +8,16 @@ namespace BPCalculator.Pages
 {
     public class AboutModel : PageModel
     {
-        public string Message { get; set; }
+        public string Module { get; set; }
+        public string Assignment { get; set; }
+
+        public string Author { get; set; }
 
         public void OnGet()
         {
-            Message = "Your application description page.";
+            Module = "MSc. in Devops - Continuous Software Delivery";
+            Assignment = "Continuous Assessment 1: Design and Develop a Continuious Delivery Pipeline";
+            Author = "Declan Smyth";
         }
     }
 }
