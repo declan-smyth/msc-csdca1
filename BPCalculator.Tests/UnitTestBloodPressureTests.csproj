@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-
+    <ProjectGuid>{915F5AA3-0AC6-4888-A1A5-DBB9677426C7}</ProjectGuid>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
