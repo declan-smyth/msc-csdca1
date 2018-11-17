@@ -8,7 +8,7 @@ using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.PhantomJS;
+//using OpenQA.Selenium.PhantomJS;
 
 
 
@@ -26,7 +26,7 @@ namespace SeleniumTests
             {
                 // Setup the browser to use during the testing
                 ChromeOptions options = new ChromeOptions();
-                options.AddArgument("--headless");
+                //options.AddArgument("--headless");
                 webDriver = new ChromeDriver(options);
 
                 // Get the WebappURI
@@ -56,14 +56,30 @@ namespace SeleniumTests
         }
 
         [Fact]
-        public void TestwithChrome()
+        public void TestSystolicMaxValue()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--headless");
-            using (webDriver)
-            {
-               
-            }
+            
+            // Navigate to the page
+            webDriver.Navigate().GoToUrl("www.google.ie");
+            
+            IWebElement query = webDriver.FindElement(By.Name("q"));
+            query.SendKeys("Cheese");
+            System.Console.WriteLine("Page title is: " + webDriver.Title);
+            webDriver.Quit();
+
+
+
+
+            // Get the Systolic Element
+            //IWebElement systolicElement = webDriver.FindElement(By.Id("BP.Systolic"));
+
+            //Get the Distoloic Element
+            //IWebElement diastolicElement = webDriver.FindElement(By.ClassName(""))
+
+            // Send 10 to Systolic Element
+            // systolicElement.SendKeys("60");
+
+
         }
     }
 }

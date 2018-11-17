@@ -32,11 +32,6 @@ namespace BPCalculator
             get
             {
                 //
-                // Validate data...
-                //
-                if (this.Systolic < this.Diastolic) { throw new System.Exception(); }
-
-                //
                 // Calculate the Category
                 //
                if (this.Diastolic < 80)
