@@ -62,14 +62,5 @@ namespace BPCalculator.UnitTest.BloodPressure
             Assert.InRange(d, BPCalculator.BloodPressure.DiastolicMin, BPCalculator.BloodPressure.DiastolicMax);
             Assert.Equal(BPCalculator.BPCategory.High2, BP.Category);
         }
-
-        [Fact]
-        public void Test_for_validata()
-        {
-            int s = 130;
-            int d = 150;
-            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
-            Assert.Throws<System.Exception>(() => BP.Category);            
-        }
     }
 }

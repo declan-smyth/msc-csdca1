@@ -8,6 +8,9 @@ using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+
+
 //using OpenQA.Selenium.PhantomJS;
 
 
@@ -27,7 +30,8 @@ namespace SeleniumTests
                 // Setup the browser to use during the testing
                 ChromeOptions options = new ChromeOptions();
                 //options.AddArgument("--headless");
-                webDriver = new ChromeDriver(options);
+               // webDriver = new ChromeDriver(options);
+                webDriver = new FirefoxDriver();
 
                 // Get the WebappURI
 
@@ -58,9 +62,10 @@ namespace SeleniumTests
         [Fact]
         public void TestSystolicMaxValue()
         {
-            
+            webDriver = new FirefoxDriver();
+
             // Navigate to the page
-            webDriver.Navigate().GoToUrl("www.google.ie");
+            webDriver.Navigate().GoToUrl("www.google.com");
             
             IWebElement query = webDriver.FindElement(By.Name("q"));
             query.SendKeys("Cheese");
