@@ -16,17 +16,20 @@
             <div class="form-group">
                 <label asp-for="BP.Systolic" class="control-label"></label>
                 <input asp-for="BP.Systolic" class="form-control" onchange="this.form.submit()" />
-                <span asp-validation-for="BP.Systolic" class="text-danger"></span>
+                <span asp-validation-for="BP.Systolic" class="text-danger" name="errormessage-systolic"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BP.Diastolic" class="control-label"></label>
                 <input asp-for="BP.Diastolic" class="form-control" onchange="this.form.submit()" />
-                <span asp-validation-for="BP.Diastolic" class="text-danger"></span>
+                <span asp-validation-for="BP.Diastolic" class="text-danger" name="errormessage-diastolic"></span>
             </div>
             @if (ViewData.ModelState.IsValid)
             {
                 <div class="form-group">
-                    @Html.DisplayFor(model => model.BP.Category, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DisplayFor(model => model.BP.Category,
+                   new {
+                       htmlAttributes = new { @class = "text-danger", Id = "result" }
+                   })
                 
                 </div>
             }
