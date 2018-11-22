@@ -7,14 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BPCalculator", "BPCalculato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestBloodPressureTests", "BPCalculator.Tests\UnitTestBloodPressureTests.csproj", "{915F5AA3-0AC6-4888-A1A5-DBB9677426C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeleniumTests", "SeleniumTests\SeleniumTests.csproj", "{53AB1B85-2CEC-425A-9938-3C92051EACB9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6FD6603D-EF73-4631-8E1C-E18035496980}"
 	ProjectSection(SolutionItems) = preProject
-		app.runsettings = app.runsettings
+		acceptence_tests.runsettings = acceptence_tests.runsettings
+		Local.testsettings = Local.testsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acceptance.Tests", "Acceptance.Tests\Acceptance.Tests.csproj", "{E6E4D445-2CEA-4262-B3CB-C1385D6E8F43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acceptance.Tests", "Acceptance.Tests\Acceptance.Tests.csproj", "{E6E4D445-2CEA-4262-B3CB-C1385D6E8F43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +29,6 @@ Global
 		{915F5AA3-0AC6-4888-A1A5-DBB9677426C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{915F5AA3-0AC6-4888-A1A5-DBB9677426C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{915F5AA3-0AC6-4888-A1A5-DBB9677426C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53AB1B85-2CEC-425A-9938-3C92051EACB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53AB1B85-2CEC-425A-9938-3C92051EACB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53AB1B85-2CEC-425A-9938-3C92051EACB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53AB1B85-2CEC-425A-9938-3C92051EACB9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E6E4D445-2CEA-4262-B3CB-C1385D6E8F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E6E4D445-2CEA-4262-B3CB-C1385D6E8F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6E4D445-2CEA-4262-B3CB-C1385D6E8F43}.Release|Any CPU.ActiveCfg = Release|Any CPU

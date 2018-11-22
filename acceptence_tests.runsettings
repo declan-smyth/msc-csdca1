@@ -3,5 +3,6 @@
   <!-- Parameters used by tests at runtime -->
   <TestRunParameters>
     <Parameter name="webAppUri" value="https://bpcalculator-dev-as-dev.azurewebsites.net" />
+    <parameter name="browser" value="Chrome" />
   </TestRunParameters>
 </RunSettings>
