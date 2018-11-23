@@ -7,7 +7,7 @@
 
 
 <h4 class="text-capitalize">Blood Pressure Category Calculator</h4>
-<p class="text-info">This application will calculate the Blood Pressure Category based on the values you provide below.</p>
+<p class="badge">This application will calculate the Blood Pressure Category based on the values you provide below.</p>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,13 +25,60 @@
             </div>
             @if (ViewData.ModelState.IsValid)
             {
-                <div class="form-group">
-                    @Html.DisplayFor(model => model.BP.Category,
-                   new {
-                       htmlAttributes = new { @class = "text-danger", Id = "result" }
-                   })
-                
-                </div>
+
+                @if (Model.BP.Category == BPCategory.Crisis)
+                {
+                    <div class="text-capitalize badge alert-danger" name="result">
+                        <h4>
+                        @Html.DisplayFor(model => model.BP.Category,
+                          new
+                          {
+                              htmlAttributes = new { @class = "bg-danger" }
+                          })
+                         </h4>
+                    </div>
+                }
+
+                else if (Model.BP.Category == BPCategory.High1 || Model.BP.Category == BPCategory.High2)
+                {
+                    
+                    <div class="badge bg-warning" name="result">
+                        <h5>
+                            @Html.DisplayFor(model => model.BP.Category,
+                                new
+                                {
+                                    htmlAttributes = new { @class = "alert-info" }
+                                })
+                         </h5>
+                    </div>
+                   
+                }
+
+                else if (Model.BP.Category == BPCategory.Normal)
+                {
+                    
+                    <div class="badge alert-info" name="result">
+                        <h5>
+                            @Html.DisplayFor(model => model.BP.Category,
+                                new
+                                {
+                                    htmlAttributes = new { @class = "alert-info" }
+                                })
+                        </h5>
+                    </div>
+                    
+                }
+
+                else
+                {
+                    
+                    <div class="alert-success badge" name="result">
+                        <h5>
+                            @Html.DisplayFor(model => model.BP.Category)
+                        </h5>
+                    </div>
+                 }
+
             }
         </form>
     </div>

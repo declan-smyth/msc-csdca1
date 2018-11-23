@@ -207,7 +207,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the Values for the Systolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Systolic"), 120);
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "120");
 
 
             //
