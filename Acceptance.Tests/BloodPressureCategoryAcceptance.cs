@@ -216,20 +216,97 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             this.InputFieldUpdates(By.Id("BP_Diastolic"), "50");
    
 
-
-            var elementResult = driver.FindElement(By.ClassName("form-group"));
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Name("result"));
             System.Console.WriteLine(elementResult.Text);
 
-            Assert.Equals("Elevated Blood Pressure", elementResult.Text);
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            Assert.IsTrue(elementResult.Text.Contains("Elevated Blood Pressure"));
 
         }
 
+        [TestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(1)]
+        public void Test_BloodPressure_Check_ErrorMessage_Invalid_Diastolic_Value()
+        {
+            //
+            // Navigate to a page for testing
+            //
+            this.OpenWebPageInBrowser(this.appURL + "/bloodpressure");
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "100");
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "300");
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Name("errormessage-diastolic"));
+            
+
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            Assert.IsTrue(elementResult.Text.Contains("Invalid Diastolic Value") ,"Verify that an Invalid value error condition is captured");
+
+        }
+
+        [TestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(1)]
+        public void Test_BloodPressure_Check_ErrorMessage_Invalid_Systolic_Value()
+        {
+            //
+            // Navigate to a page for testing
+            //
+            this.OpenWebPageInBrowser(this.appURL + "/bloodpressure");
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "300");
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "400");
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Name("errormessage-systolic"));
+
+
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            Assert.IsTrue(elementResult.Text.Contains("Invalid Systolic Value"), "Verify that an invlaid value error condition is captured");
+
+        }
 
 
         #region HelperFunctions
 
         /// <summary>
         /// Performs a click that will handle stale elements exceptions
+        /// 
+        /// It will handle a Stale Element Reference Execetion that
+        /// can occur where th
         /// </summary>
         /// <param name="by">Element that is being used</param>
         /// <returns>boolean</returns>
@@ -254,10 +331,13 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         }
 
         /// <summary>
+        /// This method will perform a SendKey on an element to provide input
         /// 
-        /// </summary>
-        /// <param name="by"></param>
-        /// <param name="keys"></param>
+        /// It will handle a Stale Element Reference Execetion that
+        /// can occur where the DOM is changed due to dynamic execution of javascript
+        /// on the page
+        /// <param name="by">Reference to Element</param>
+        /// <param name="keys">Key value to send to element</param>
         /// <returns></returns>
         public Boolean DoSendKey(By by, string keys)
         {
@@ -280,10 +360,14 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         }
 
         /// <summary>
+        /// This method will perform a Clear action on an element
         /// 
+        /// It will handle a Stale Element Reference Execetion that
+        /// can occur where the DOM is changed due to dynamic execution of javascript
+        /// on the page
         /// </summary>
-        /// <param name="by"></param>
-        /// <returns></returns>
+        /// <param name="by">Element</param>
+        /// <returns>True - Success; False - Error Condition</returns>
         public Boolean DoClear(By by)
         {
             Boolean result = false;
@@ -305,10 +389,40 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         }
 
         /// <summary>
-        /// Helper method to update the input fieds on a form
+        /// Send a Tab Key to move from an element
         /// </summary>
-        /// <param name="by"></param>
-        /// <param name="input"></param>
+        /// <param name="by">Reference to an element</param>
+        /// <returns></returns>
+        public Boolean DoTab(By by)
+        {
+            Boolean result = false;
+
+            int attempts = 0;
+
+            while (attempts < 2)
+            {
+                try
+                {
+                    driver.FindElement(by).SendKeys(Keys.Tab);
+                    result = true;
+                    break;
+                }
+                catch (StaleElementReferenceException) { }
+
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Helper method to update the input fields on the form
+        /// The method will perform the followng:
+        /// - Click into the field
+        /// - Clear the Field
+        /// - Send Value to field
+        /// - Click out
+        /// </summary>
+        /// <param name="by">Reference to the input element</param>
+        /// <param name="input">Input value</param>
         public void InputFieldUpdates(By by, String input)
         {
             DoClick(by);
@@ -320,9 +434,15 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
                 DoSendKey(by, input);
             }
 
-            DoClick(by);
+            DoTab(by);
         }
 
+        /// <summary>
+        /// Helper methond to Open a Web Page in a Browser with the following attributes
+        /// - Browser Window is Maximised
+        /// - Timeout is set to 30 Seconds
+        /// </summary>
+        /// <param name="pageToOpen">Url to open</param>
         public void OpenWebPageInBrowser(string pageToOpen)
         {
             driver.Manage().Window.Maximize();

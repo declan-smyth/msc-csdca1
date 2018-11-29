@@ -7,7 +7,7 @@
 
 
 <h4 class="text-capitalize">Blood Pressure Category Calculator</h4>
-<p class="badge">This application will calculate the Blood Pressure Category based on the values you provide below.</p>
+<p>This application will calculate the Blood Pressure Category based on the values you provide below.</p>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,6 +23,7 @@
                 <input asp-for="BP.Diastolic" class="form-control" onchange="this.form.submit()" />
                 <span asp-validation-for="BP.Diastolic" class="text-danger" name="errormessage-diastolic"></span>
             </div>
+
             @if (ViewData.ModelState.IsValid)
             {
 

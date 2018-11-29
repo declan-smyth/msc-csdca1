@@ -10,7 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6FD6603D-EF73-4631-8E1C-E18035496980}"
 	ProjectSection(SolutionItems) = preProject
 		acceptence_tests.runsettings = acceptence_tests.runsettings
-		Local.testsettings = Local.testsettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acceptance.Tests", "Acceptance.Tests\Acceptance.Tests.csproj", "{E6E4D445-2CEA-4262-B3CB-C1385D6E8F43}"
