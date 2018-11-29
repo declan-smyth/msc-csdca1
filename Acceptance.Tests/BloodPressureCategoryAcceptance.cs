@@ -16,22 +16,26 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
     [TestClass]
     public class BloodPressureCategoryAcceptance
     {
-        private IWebDriver driver;
+        protected IWebDriver driver;
         private string appURL;
-        private TestContext testContextInstance;
+        public TestContext TestContext { get; set; }
         private string browser;
 
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        //public TestContext TestContext
+        //{
+        //    get
+        //    {
+        //        return testContextInstance;
+        //    }
+        //    set
+        //    {
+        //        testContextInstance = value;
+        //    }
+        //}
 
         [TestInitialize()]
         public void TestSetup()
