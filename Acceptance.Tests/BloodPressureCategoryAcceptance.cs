@@ -120,8 +120,10 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             }
             catch (Exception ex)
             {
-
-                throw;
+                System.Console.WriteLine("Error Occured that casued an exception:" + ex.Message);
+                System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("ChromeWebDriver"));
+                System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("GeckoWebDriver"));
+                System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("IEWebDriver"));
             }
 
 
