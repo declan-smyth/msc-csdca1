@@ -9,7 +9,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
-
+using System.Collections.Generic;
 
 namespace BPCalculator.AcceptanceTest.BloodPressure
 {
@@ -45,9 +45,10 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             var optionsCh = new ChromeOptions
             {
-                AcceptInsecureCertificates = true
+                AcceptInsecureCertificates = true,
+                               
             };
-
+            
             //
             // Firefox Options
             //
@@ -76,6 +77,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
                 this.appURL = "https://bpcalculator-dev-as-dev.azurewebsites.net";
             }
 
+            
             //
             // Get the browser to use from the Test Context, otherwise use Chrome as the default
             //
@@ -98,16 +100,17 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             switch (browser)
             {
                 case "Chrome":
+                    optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
                     driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
                     break;
                 case "Firefox":
-
                     driver = new FirefoxDriver(Environment.GetEnvironmentVariable("GeckoWebDriver"), optionsFf);
                     break;
                 case "IE":
                     driver = new InternetExplorerDriver(Environment.GetEnvironmentVariable("IEWebDriver"));
                     break;
                 default:
+                    optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
                     driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
                     break;
             }
