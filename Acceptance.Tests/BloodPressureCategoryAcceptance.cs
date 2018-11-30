@@ -124,6 +124,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
                 System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("ChromeWebDriver"));
                 System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("GeckoWebDriver"));
                 System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("IEWebDriver"));
+                throw;
             }
 
 
