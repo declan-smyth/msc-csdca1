@@ -40,6 +40,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         [TestInitialize()]
         public void TestSetup()
         {
+            string default_browser = "Chrome";
             //
             // Chrome Options
             //
@@ -83,13 +84,13 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             try
             {
-                this.browser = TestContext.Properties["browser"].ToString() != null ? this.TestContext.Properties["browser"].ToString() : "Firefox";
+                this.browser = TestContext.Properties["browser"].ToString() != null ? this.TestContext.Properties["browser"].ToString() : default_browser;
 
             }
             catch 
             {
 
-                this.browser = "Firefox";
+                this.browser = default_browser;
             }
             //
             // Initalize the driver based on the browser selected in the build
@@ -97,22 +98,30 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //      You need to pass the location of the driver exeutables on the system
             //      In Azure DevOps the drives are located via environment variables
             //
-            switch (browser)
+            try
             {
-                case "Chrome":
-                    optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
-                    driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
-                    break;
-                case "Firefox":
-                    driver = new FirefoxDriver(Environment.GetEnvironmentVariable("GeckoWebDriver"), optionsFf);
-                    break;
-                case "IE":
-                    driver = new InternetExplorerDriver(Environment.GetEnvironmentVariable("IEWebDriver"));
-                    break;
-                default:
-                    optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
-                    driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
-                    break;
+                switch (browser)
+                {
+                    case "Chrome":
+                        optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
+                        driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
+                        break;
+                    case "Firefox":
+                        driver = new FirefoxDriver(Environment.GetEnvironmentVariable("GeckoWebDriver"), optionsFf);
+                        break;
+                    case "IE":
+                        driver = new InternetExplorerDriver(Environment.GetEnvironmentVariable("IEWebDriver"));
+                        break;
+                    default:
+                        optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
+                        driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
 
 
