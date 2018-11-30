@@ -102,7 +102,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
                     break;
                 case "Firefox":
 
-                    driver = new FirefoxDriver(Environment.GetEnvironmentVariable("GekoWebDriver"), optionsFf);
+                    driver = new FirefoxDriver(Environment.GetEnvironmentVariable("GeckoWebDriver"), optionsFf);
                     break;
                 case "IE":
                     driver = new InternetExplorerDriver(Environment.GetEnvironmentVariable("IEWebDriver"));
