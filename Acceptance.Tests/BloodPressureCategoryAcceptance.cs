@@ -40,7 +40,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         [TestInitialize()]
         public void TestSetup()
         {
-            string default_browser = "Chrome";
+            string default_browser = "Firefox";
             //
             // Chrome Options
             //
