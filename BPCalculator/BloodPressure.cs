@@ -5,6 +5,7 @@ namespace BPCalculator
     // BP categories
     public enum BPCategory
     {
+        [Display (Name = "")] None,
         [Display(Name="Low Blood Pressure")] Low,
         [Display(Name="Normal Blood Pressure")]  Normal,
         [Display(Name="Elevated Blood Pressure")] Elevated,
@@ -31,53 +32,46 @@ namespace BPCalculator
         {
             get
             {
-                //
-                // Calculate the Category
-                //
-               if (this.Diastolic < 80)
-                {
-                    if (this.Systolic < 120)
-                    {
-                        return BPCategory.Normal;
-                    }
-                    else if (this.Systolic >= 120 && this.Systolic < 130)
-                    {
-                        return BPCategory.Elevated;
-                    }
-                    else
-                    {
-                        if (this.Systolic >= 130 && this. Systolic < 140)
-                        {
-                            return BPCategory.High1;
-                        }
-                        else if (this.Systolic >= 140 && this.Systolic <= 180)
-                        {
-                            return BPCategory.High2;
-                        }
-                        else
-                        {
-                            return BPCategory.Crisis;
-                        }
-                    }
-                }
-               else if (this.Systolic > 180 )
-                {
-                    return BPCategory.Crisis;
-                }
-               else if (this.Diastolic >= 80 && this.Diastolic < 90)
-                {
-                    return BPCategory.High1;
-                }
-                else if (this.Diastolic >= 90 && this.Diastolic <= 120)
-                {
-                    return BPCategory.High2;
-                }
-                else
-                {
-                    return BPCategory.Crisis;
-                }
-               
+              return this.IsCrisisPressure() ? BPCategory.Crisis :
+                     this.IsHigh2Pressure() ? BPCategory.High2 :
+                     this.IsHigh1Pressure() ? BPCategory.High1 :
+                     this.IsElevatedPressure() ? BPCategory.Elevated :
+                     this.IsNormalPressue() ? BPCategory.Normal : BPCategory.None;
             }
+        }
+
+        private bool IsLowPressure()
+        {
+            //this.browser = TestContext.Properties["browser"].ToString() != null ? this.TestContext.Properties["browser"].ToString() : default_browser;
+            //bool result = (this.Systolic)
+            return false;
+        }
+
+        private bool IsNormalPressue()
+        {
+           return (this.Diastolic < 80) && (this.Systolic < 120) ? true : false;
+        }
+
+        private bool IsElevatedPressure()
+        {
+            return (this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130) ? true : false;        
+        }
+
+        private bool IsHigh1Pressure()
+        {
+            return (this.Diastolic < 80) && (this.Systolic >= 130 && this.Systolic < 140) ? true : ( this.Systolic < 180 ) && (this.Diastolic >= 80 && this.Diastolic < 90) ? true : false;
+            
+        }
+
+        private bool IsHigh2Pressure()
+        {
+            return (this.Diastolic < 80) && (this.Systolic >= 140 && this.Systolic <= 180) ? true : (this.Systolic < 180) && (this.Diastolic >= 90 && this.Diastolic <= 120) ? true : false;
+            
+        }
+
+        private bool IsCrisisPressure()
+        {
+            return (this.Diastolic > 120 || this.Systolic > 180) ? true : false;
         }
     }
 }
