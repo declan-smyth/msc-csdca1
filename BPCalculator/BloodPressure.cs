@@ -40,17 +40,17 @@ namespace BPCalculator
                     {
                         return BPCategory.Normal;
                     }
-                    else if (this.Systolic >= 120 & this.Systolic < 130)
+                    else if (this.Systolic >= 120 && this.Systolic < 130)
                     {
                         return BPCategory.Elevated;
                     }
                     else
                     {
-                        if (this.Systolic >= 130 & this. Systolic < 140)
+                        if (this.Systolic >= 130 && this. Systolic < 140)
                         {
                             return BPCategory.High1;
                         }
-                        else if (this.Systolic >= 140 & this.Systolic <= 180)
+                        else if (this.Systolic >= 140 && this.Systolic <= 180)
                         {
                             return BPCategory.High2;
                         }
@@ -64,11 +64,11 @@ namespace BPCalculator
                 {
                     return BPCategory.Crisis;
                 }
-               else if (this.Diastolic >= 80 & this.Diastolic < 90)
+               else if (this.Diastolic >= 80 && this.Diastolic < 90)
                 {
                     return BPCategory.High1;
                 }
-                else if (this.Diastolic >= 90 & this.Diastolic <= 120)
+                else if (this.Diastolic >= 90 && this.Diastolic <= 120)
                 {
                     return BPCategory.High2;
                 }
