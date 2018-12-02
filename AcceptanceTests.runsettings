@@ -3,6 +3,6 @@
   <!-- Parameters used by tests at runtime -->
   <TestRunParameters>
     <Parameter name="webAppUri" value="http://localhost:40327/bloodpressure" />
-    <parameter name="browser" value="Firefox" />
+    <Parameter name="browser" value="Firefox" />
   </TestRunParameters>
 </RunSettings>
