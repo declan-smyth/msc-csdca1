@@ -22,21 +22,6 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         private string browser;
 
         
-        /// <summary>
-        /// 
-        /// </summary>
-        //public TestContext TestContext
-        //{
-        //    get
-        //    {
-        //        return testContextInstance;
-        //    }
-        //    set
-        //    {
-        //        testContextInstance = value;
-        //    }
-        //}
-
         [TestInitialize()]
         public void TestSetup()
         {
@@ -49,7 +34,8 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
                 AcceptInsecureCertificates = true,
                                
             };
-            
+            optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
+
             //
             // Firefox Options
             //
@@ -92,6 +78,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
 
                 this.browser = default_browser;
             }
+
             //
             // Initalize the driver based on the browser selected in the build
             // Note: 
@@ -103,17 +90,12 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
                 switch (browser)
                 {
                     case "Chrome":
-                        optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
                         driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
                         break;
                     case "Firefox":
                         driver = new FirefoxDriver(Environment.GetEnvironmentVariable("GeckoWebDriver"), optionsFf);
                         break;
-                    case "IE":
-                        driver = new InternetExplorerDriver(Environment.GetEnvironmentVariable("IEWebDriver"));
-                        break;
                     default:
-                        optionsCh.AddArguments(new List<string>() { "headless", "disable-gpu" });
                         driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"), optionsCh);
                         break;
                 }
@@ -122,9 +104,8 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             {
                 System.Console.WriteLine("Error Occured that casued an exception:" + ex.Message);
                 System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("ChromeWebDriver"));
-                System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("GeckoWebDriver"));
-                System.Console.WriteLine("ChromeWebDriver:" + Environment.GetEnvironmentVariable("IEWebDriver"));
-                throw;
+                System.Console.WriteLine("GeckoWebDriver:" + Environment.GetEnvironmentVariable("GeckoWebDriver"));
+                throw ex;
             }
 
 
@@ -152,7 +133,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/bloodpressure");
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
 
             Assert.IsTrue(driver.Title.Contains("Blood Pressure Calculator"),"verify the title of the page contains Blood Pressure");
         }
@@ -165,20 +146,20 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/bloodpressure");
-          
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+
             Assert.IsTrue(driver.Title.Contains(""), "Verify title of the Blood Pressure Page");
         }
 
         [TestMethod]
         [TestCategory("AcceptanceTest")]
-        [Priority(1)]
+        [Priority(2)]
         public void Test_Launch_About()
         {
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/About");
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/About"), "Validate that the page opens in the browser");
 
             Assert.IsTrue(driver.Title.Contains("About"), "Verify title of the About Page");
         }
@@ -191,7 +172,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/About");
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/About"), "Validate that the page opens in the browser");
 
             var headerSelector = By.TagName("h3");
             Assert.IsTrue(driver.FindElement(headerSelector).Text.Contains("Continuous Assessment 1"), "Verift that the heading on the page contains CA 1");
@@ -206,8 +187,9 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/About");
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/About"), "Validate that the page opens in the browser");
 
+ 
             var headerSelector = By.TagName("p");
             Assert.IsTrue(driver.FindElement(headerSelector).Text.Contains("Declan Smyth"), "Verift that the authors name is on the about page");
 
@@ -221,7 +203,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/bloodpressure");
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
 
             //
             // Complete the Values for the Systolic Input Field
@@ -250,13 +232,13 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
 
         [TestMethod]
         [TestCategory("AcceptanceTest")]
-        [Priority(1)]
+        [Priority(2)]
         public void Test_BloodPressure_Check_ErrorMessage_Invalid_Diastolic_Value()
         {
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/bloodpressure");
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
 
             //
             // Complete the Values for the Systolic Input Field
@@ -285,13 +267,14 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
 
         [TestMethod]
         [TestCategory("AcceptanceTest")]
-        [Priority(1)]
+        [Priority(2)]
         public void Test_BloodPressure_Check_ErrorMessage_Invalid_Systolic_Value()
         {
             //
             // Navigate to a page for testing
             //
-            this.OpenWebPageInBrowser(this.appURL + "/bloodpressure");
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+            
 
             //
             // Complete the Values for the Systolic Input Field
@@ -462,11 +445,19 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         /// - Timeout is set to 30 Seconds
         /// </summary>
         /// <param name="pageToOpen">Url to open</param>
-        public void OpenWebPageInBrowser(string pageToOpen)
+        public Boolean OpenWebPageInBrowser(string pageToOpen)
         {
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            driver.Navigate().GoToUrl(pageToOpen);
+            Boolean result = false;
+
+            if (driver != null)
+            {
+                driver.Manage().Window.Maximize();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                driver.Navigate().GoToUrl(pageToOpen);
+                result = true;
+            }
+
+            return result;
         }
 
 
