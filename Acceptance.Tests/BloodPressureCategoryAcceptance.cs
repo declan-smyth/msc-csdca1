@@ -214,7 +214,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the values for the Diastolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Diastolic"), "50");
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "81");
    
 
             //
@@ -227,6 +227,41 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             // That the returned values to ensure it matches the expected value
             //
             Assert.IsTrue(elementResult.Text.Contains("Elevated Blood Pressure"));
+
+        }
+
+        [TestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(1)]
+        public void Test_BloodPressure_Check_Seekmedicalattendtion()
+        {
+            //
+            // Navigate to a page for testing
+            //
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "180");
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "");
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Name("result"));
+            System.Console.WriteLine(elementResult.Text);
+
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            Assert.IsTrue(elementResult.Text.Contains("Seek Medical Attention"));
 
         }
 

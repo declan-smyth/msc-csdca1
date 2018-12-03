@@ -38,20 +38,30 @@ namespace BPCalculator
                 if (this.IsHigh2Pressure()) { rtnValue =  BPCategory.High2; }
                 if (this.IsHigh1Pressure()) { rtnValue =  BPCategory.High1; }
                 if (this.IsElevatedPressure()) { rtnValue =  BPCategory.Elevated; }
-                if (this.IsNormalPressue()) { rtnValue = BPCategory.Normal; }
+                if (this.IsNormalPressure()) { rtnValue = BPCategory.Normal; }
+                if (this.IsLowPressure()) { rtnValue = BPCategory.Low; }
+
 
                 return rtnValue;
             }
         }
 
-        private bool IsNormalPressue()
+        private bool IsLowPressure()
         {
-           return (this.Diastolic < 80) && (this.Systolic < 120);
+            return (this.Diastolic < 60) || (this.Systolic < 90);
+        }
+
+        private bool IsNormalPressure()
+        {
+      
+            return (this.Diastolic > 60 && this.Diastolic < 80) && (this.Systolic > 80 && this.Systolic < 120);
+
         }
 
         private bool IsElevatedPressure()
         {
-            return (this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130);        
+
+            return ((this.Diastolic > 60 && this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130));
         }
 
         private bool IsHigh1Pressure()
@@ -77,7 +87,7 @@ namespace BPCalculator
 
         private bool IsCrisisPressure()
         {
-            return (this.Diastolic > 120 || this.Systolic > 180);
+            return this.Diastolic > 120 || this.Systolic > 180;
         }
     }
 }

@@ -11,11 +11,43 @@ namespace BPCalculator.UnitTest.BloodPressure
         [Theory]
         [InlineData(119,79)]
         [InlineData(111,75)]
+        [InlineData(91,61)]
+        [InlineData(115,68)]
         public void Test_for_normal_values(int s, int d)
         {
             BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
             Assert.Equal(BPCalculator.BPCategory.Normal, BP.Category);
         }
+
+        [Theory]
+        [InlineData(119, 60)]
+        [InlineData(111, 40)]
+        [InlineData(91, 50)]
+        public void Test_for_Non_Normal_values(int s, int d)
+        {
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
+            Assert.NotEqual(BPCalculator.BPCategory.Normal, BP.Category);
+        }
+
+        [Theory]
+        [InlineData(89, 59)]
+        [InlineData(80, 50)]
+        [InlineData(83, 43)]
+        [InlineData(70, 40)]
+        public void Test_for_low_values(int s, int d)
+        {
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
+            Assert.Equal(BPCalculator.BPCategory.Low, BP.Category);
+        }
+
+        [Theory]
+        [InlineData(90, 60)]
+        public void Test_for_Non_low_values(int s, int d)
+        {
+            BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
+            Assert.NotEqual(BPCalculator.BPCategory.Low, BP.Category);
+        }
+
 
         [Theory]
         [InlineData(124,79)]
