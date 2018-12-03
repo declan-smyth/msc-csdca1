@@ -32,29 +32,27 @@ namespace BPCalculator
         {
             get
             {
-              return this.IsCrisisPressure() ? BPCategory.Crisis :
-                     this.IsHigh2Pressure() ? BPCategory.High2 :
-                     this.IsHigh1Pressure() ? BPCategory.High1 :
-                     this.IsElevatedPressure() ? BPCategory.Elevated :
-                     this.IsNormalPressue() ? BPCategory.Normal : BPCategory.None;
-            }
-        }
+                BPCategory rtnValue = BPCategory.None;
 
-        private bool IsLowPressure()
-        {
-            //this.browser = TestContext.Properties["browser"].ToString() != null ? this.TestContext.Properties["browser"].ToString() : default_browser;
-            //bool result = (this.Systolic)
-            return false;
+                if (this.IsCrisisPressure()) { rtnValue =  BPCategory.Crisis; }
+                if (this.IsHigh2Pressure()) { rtnValue =  BPCategory.High2; }
+                if (this.IsHigh1Pressure()) { rtnValue =  BPCategory.High1; }
+                if (this.IsElevatedPressure()) { rtnValue =  BPCategory.Elevated; }
+                if (this.IsNormalPressue()) { rtnValue =  BPCategory.Normal; }
+                if (this.IsCrisisPressure()) { rtnValue =  BPCategory.Crisis; }
+
+                return rtnValue;
+            }
         }
 
         private bool IsNormalPressue()
         {
-           return (this.Diastolic < 80) && (this.Systolic < 120) ? true : false;
+           return (this.Diastolic < 80) && (this.Systolic < 120);
         }
 
         private bool IsElevatedPressure()
         {
-            return (this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130) ? true : false;        
+            return (this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130);        
         }
 
         private bool IsHigh1Pressure()
