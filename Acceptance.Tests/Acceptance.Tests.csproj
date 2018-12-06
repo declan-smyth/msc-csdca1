@@ -32,8 +32,4 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(SolutionDir)\*.runsettings. $(OutDir)" />
-  </Target>
-
 </Project>
