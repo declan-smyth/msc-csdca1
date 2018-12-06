@@ -53,9 +53,8 @@ namespace BPCalculator
 
         private bool IsNormalPressure()
         {
-      
-            return (this.Diastolic > 60 && this.Diastolic < 80) && (this.Systolic > 80 && this.Systolic < 120);
-
+            bool v = (this.Diastolic > 60 && this.Diastolic < 80);
+            return v && (this.Systolic > 80 && this.Systolic < 120);
         }
 
         private bool IsElevatedPressure()

@@ -13,6 +13,8 @@ namespace BPCalculator.UnitTest.BloodPressure
         [InlineData(111,75)]
         [InlineData(91,61)]
         [InlineData(115,68)]
+        [InlineData(100,70)]
+        [InlineData(110,65)]
         public void Test_for_normal_values(int s, int d)
         {
             BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
@@ -23,6 +25,7 @@ namespace BPCalculator.UnitTest.BloodPressure
         [InlineData(119, 60)]
         [InlineData(111, 40)]
         [InlineData(91, 50)]
+        [InlineData(100,91)]
         public void Test_for_Non_Normal_values(int s, int d)
         {
             BP = new BPCalculator.BloodPressure() { Systolic = s, Diastolic = d };
