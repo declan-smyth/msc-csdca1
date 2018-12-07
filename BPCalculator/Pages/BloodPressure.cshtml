@@ -29,7 +29,7 @@
 
                 @if (Model.BP.Category == BPCategory.Crisis || Model.BP.Category == BPCategory.Low)
                 {
-                    <div class="text-capitalize badge bg-danger" name="result">
+                    <div class="text-capitalize badge alert-danger" name="result">
                         <h4>
                             @Html.DisplayFor(model => model.BP.Category,
                               new
@@ -37,54 +37,41 @@
                                   htmlAttributes = new { @class = "bg-danger" }
                               })
                             <br />
-                            <b>Seek Medical Attention Immediately</b>
+                            <strong>Seek Medical Attention Immediately</strong>
                         </h4>
                     </div>
                 }
 
-                else if (Model.BP.Category == BPCategory.High1 || Model.BP.Category == BPCategory.High2)
+              @if (Model.BP.Category == BPCategory.High1 || Model.BP.Category == BPCategory.High2)
                 {
 
-                    <div class="badge bg-warning" name="result" color="#ee6811">
-                        <h5>
+                    <div class="badge alert-warning" name="result">
+                        <h4>
+                            @Html.DisplayFor(model => model.BP.Category,
+                                new
+                                {
+                                    htmlAttributes = new { @class = "alert-warning" }
+                                })
+                        </h4>
+                    </div>
+
+                }
+
+               @if (Model.BP.Category == BPCategory.Normal || Model.BP.Category == BPCategory.Elevated)
+                {
+
+                    <div class="badge alert-success" name="result">
+                        <h4>
                             @Html.DisplayFor(model => model.BP.Category,
                                 new
                                 {
                                     htmlAttributes = new { @class = "alert-info" }
                                 })
-                        </h5>
+                        </h4>
                     </div>
 
                 }
 
-                else if (Model.BP.Category == BPCategory.Normal)
-                {
-
-                    <div class="badge bg-success" name="result" color="#218b01">
-                        <h5>
-                            @Html.DisplayFor(model => model.BP.Category,
-                                new
-                                {
-                                    htmlAttributes = new { @class = "alert-info" }
-                                })
-                        </h5>
-                    </div>
-
-                }
-
-                else
-                {
-
-                    <div class="badge" name="result">
-                        <h5>
-                            @Html.DisplayFor(model => model.BP.Category,
-                                new
-                                {
-                                    htmlAttributes = new { @class = "alert-info" }
-                                })
-                        </h5>
-                    </div>
-                }
 
             }
         </form>
