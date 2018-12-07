@@ -198,7 +198,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
         [TestMethod]
         [TestCategory("AcceptanceTest")]
         [Priority(1)]
-        public void Test_BloodPressure_Check_InputValues()
+        public void Test_BloodPressure_Check_HighPressure_InputValues()
         {
             //
             // Navigate to a page for testing
@@ -208,7 +208,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the Values for the Systolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Systolic"), "120");
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "130");
 
 
             //
@@ -226,9 +226,45 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // That the returned values to ensure it matches the expected value
             //
-            Assert.IsTrue(elementResult.Text.Contains("Elevated Blood Pressure"));
+            Assert.IsTrue(elementResult.Text.Contains("High Blood Pressure"));
 
         }
+
+        [TestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(1)]
+        public void Test_BloodPressure_Check_Elevated_InputValues()
+        {
+            //
+            // Navigate to a page for testing
+            //
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "124");
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "79");
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Name("result"));
+            System.Console.WriteLine(elementResult.Text);
+
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            Assert.IsTrue(elementResult.Text.Contains("Elevated"));
+
+        }
+
 
         [TestMethod]
         [TestCategory("AcceptanceTest")]
@@ -243,13 +279,13 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the Values for the Systolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Systolic"), "180");
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "181");
 
 
             //
             // Complete the values for the Diastolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Diastolic"), "");
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "122");
 
 
             //
