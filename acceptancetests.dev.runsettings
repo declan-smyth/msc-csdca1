@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+      <!-- Path relative to solution directory -->  
+    <ResultsDirectory>.\TestResults</ResultsDirectory>
+    <DesignMode>false</DesignMode>
+    <DisableParallelization>false</DisableParallelization>
+    <DisableAppDomain>false</DisableAppDomain>
+    <CollectSourceInformation>true</CollectSourceInformation>
+  </RunConfiguration>
+  <!-- Parameters used by tests at runtime -->
+  <TestRunParameters>
+    <Parameter name="webAppUri" value="https://bpcalculator-dev-as.azurewebsites.net" />
+    <Parameter name="browser" value="Firefox" />
+  </TestRunParameters>
+</RunSettings>

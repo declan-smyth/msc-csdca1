@@ -22,7 +22,7 @@ namespace BPCalculator.Pages
             // extra validation
             if (!(BP.Systolic > BP.Diastolic))
             {
-                ModelState.AddModelError("Error", "Systolic must be greater than Diastolic");
+                ModelState.AddModelError("", "Systolic must be greater than Diastolic");
             }
             return Page();
         }

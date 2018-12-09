@@ -140,7 +140,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
 
         [TestMethod]
         [TestCategory("AcceptanceTest")]
-        [Priority(1)]
+        [Priority(2)]
         public void Test_Launch_BloodPressurePage()
         {
             //
@@ -195,10 +195,90 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
 
         }
 
-        [TestMethod]
+        [DataRow(124, 79)]
+        [DataTestMethod]
         [TestCategory("AcceptanceTest")]
         [Priority(1)]
-        public void Test_BloodPressure_Check_HighPressure_InputValues()
+        public void Test_BloodPressure_Check_Elevated_InputValues(int s, int d)
+        {
+            //
+            // Navigate to a page for testing
+            //
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), s.ToString());
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), d.ToString());
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Id("results"));
+            System.Console.WriteLine(elementResult.Text);
+
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            var expected_result = "ELEVATED";
+            Assert.IsTrue(elementResult.Text.Contains(expected_result));
+
+        }
+
+
+        [DataRow(130,79)]
+        [DataRow(139,85)]
+        [DataRow(140,79)]
+        [DataRow(140,90)]
+        [DataRow(180,79)]
+        [DataTestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(1)]
+        public void Test_BloodPressure_Check_HighPressure_InputValues(int s, int d)
+        {
+            //
+            // Navigate to a page for testing
+            //
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), s.ToString());
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), d.ToString());
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Id("results"));
+            System.Console.WriteLine(elementResult.Text);
+
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            var expected_result = "HIGH BLOOD PRESSURE";
+            Assert.IsTrue(elementResult.Text.Contains(expected_result));
+
+        }
+
+
+        [TestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(2)]
+        public void Test_BloodPressure_Check_HighPressure_WarningMessage()
         {
             //
             // Navigate to a page for testing
@@ -214,26 +294,26 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the values for the Diastolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Diastolic"), "81");
-   
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "79");
+
 
             //
             // Get the result from the element being tested
             //
-            var elementResult = driver.FindElement(By.Name("result"));
+            var elementResult = driver.FindElement(By.Id("alertmessage"));
             System.Console.WriteLine(elementResult.Text);
 
             //
-            // That the returned values to ensure it matches the expected value
+            // Check the the message contains the word warning
             //
-            Assert.IsTrue(elementResult.Text.Contains("High Blood Pressure"));
+            Assert.IsTrue(elementResult.Text.Contains("Warning!"));
 
         }
 
         [TestMethod]
         [TestCategory("AcceptanceTest")]
-        [Priority(1)]
-        public void Test_BloodPressure_Check_Elevated_InputValues()
+        [Priority(2)]
+        public void Test_BloodPressure_Check_HighPressure_MessageType()
         {
             //
             // Navigate to a page for testing
@@ -243,7 +323,7 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the Values for the Systolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Systolic"), "124");
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "130");
 
 
             //
@@ -255,21 +335,24 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Get the result from the element being tested
             //
-            var elementResult = driver.FindElement(By.Name("result"));
+            var elementResult = driver.FindElement(By.Id("alertmessage"));
             System.Console.WriteLine(elementResult.Text);
-
+            System.Console.WriteLine(elementResult.GetAttribute("class").ToString());
+            
             //
-            // That the returned values to ensure it matches the expected value
+            // Check the the message contains the word warning
             //
-            Assert.IsTrue(elementResult.Text.Contains("Elevated"));
+            Assert.IsTrue(elementResult.GetAttribute("class").Contains("alert-warning"));
 
         }
 
 
-        [TestMethod]
+        [DataRow(181, 122)]
+        [DataRow(70, 40)]
+        [DataTestMethod]
         [TestCategory("AcceptanceTest")]
         [Priority(1)]
-        public void Test_BloodPressure_Check_Seekmedicalattendtion()
+        public void Test_BloodPressure_Check_MedicalAttention_Message(int s, int d)
         {
             //
             // Navigate to a page for testing
@@ -279,27 +362,65 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the Values for the Systolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Systolic"), "181");
+            this.InputFieldUpdates(By.Id("BP_Systolic"), s.ToString());
 
 
             //
             // Complete the values for the Diastolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Diastolic"), "122");
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), d.ToString());
 
 
             //
             // Get the result from the element being tested
             //
-            var elementResult = driver.FindElement(By.Name("result"));
+            var elementResult = driver.FindElement(By.Id("alertmessage"));
             System.Console.WriteLine(elementResult.Text);
 
             //
-            // That the returned values to ensure it matches the expected value
+            // Check the the message contains the word warning
             //
-            Assert.IsTrue(elementResult.Text.Contains("Seek Medical Attention"));
+            var expected_result = "seek medical attendion";
+            Assert.IsTrue(elementResult.Text.Contains(expected_result));
+          }
+
+        [DataRow(181, 122)]
+        [DataRow(70, 40)]
+        [DataTestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(2)]
+        public void Test_BloodPressure_Check_MedicalAttention_MessageType(int s, int d)
+        {
+            //
+            // Navigate to a page for testing
+            //
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), s.ToString());
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), d.ToString());
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Id("alertmessage"));
+            System.Console.WriteLine(elementResult.Text);
+
+            //
+            // Check the the message contains the word warning
+            //
+            Assert.IsTrue(elementResult.GetAttribute("class").Contains("alert-danger"));
 
         }
+
 
         [TestMethod]
         [TestCategory("AcceptanceTest")]
@@ -372,6 +493,41 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
 
         }
 
+        [TestMethod]
+        [TestCategory("AcceptanceTest")]
+        [Priority(2)]
+        public void Test_BloodPressue_Check_ErrorMessage_SystolicGreaterDiastolic()
+        {
+            //
+            // Navigate to a page for testing
+            //
+            Assert.IsTrue(this.OpenWebPageInBrowser(this.appURL + "/bloodpressure"), "Validate that the page opens in the browser");
+
+
+            //
+            // Complete the Values for the Systolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "");
+
+
+            //
+            // Complete the values for the Diastolic Input Field
+            //
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "400");
+
+
+            //
+            // Get the result from the element being tested
+            //
+            var elementResult = driver.FindElement(By.Name("errormessage-systolic"));
+
+
+            //
+            // That the returned values to ensure it matches the expected value
+            //
+            Assert.IsTrue(elementResult.Text.Contains("Invalid Systolic Value"), "Verify that an invlaid value error condition is captured");
+
+        }
 
         #region HelperFunctions
 

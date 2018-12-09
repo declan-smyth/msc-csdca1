@@ -5,6 +5,11 @@
     ViewData["Title"] = "Blood Pressure Category Calculator";
 }
 
+<style>
+.logo {
+    font-size: 12px;
+}
+</style>
 
 <h4 class="text-capitalize">Blood Pressure Category Calculator</h4>
 <p>This application will calculate the Blood Pressure Category based on the values you provide below.</p>
@@ -23,59 +28,53 @@
                 <input asp-for="BP.Diastolic" class="form-control" onchange="this.form.submit()" />
                 <span asp-validation-for="BP.Diastolic" class="text-danger" name="errormessage-diastolic"></span>
             </div>
+        </form>
 
-            @if (ViewData.ModelState.IsValid)
+    </div>
+    @if (ViewData.ModelState.IsValid)
+    {
+        <div class="col-md-5 ">
+
+            <div class="panel panel-primary" name="results" id="results">
+                <div class="panel-heading text-uppercase"><strong>Your results</strong></div>
+                <div class="panel-body tex">
+                    Based on the information you have provided we have calculated your blood pressure category as:<br />
+                    <span class="text-uppercase"><strong>@Html.DisplayFor(model => model.BP.Category)</strong> </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row">
+    @if (ViewData.ModelState.IsValid)
+     {
+      <div class="col-md-push-4">
+            @if (Model.BP.Category == BPCategory.Crisis || Model.BP.Category == BPCategory.Low)
             {
 
-                @if (Model.BP.Category == BPCategory.Crisis || Model.BP.Category == BPCategory.Low)
-                {
-                    <div class="text-capitalize badge alert-danger" name="result">
-                        <h4>
-                            @Html.DisplayFor(model => model.BP.Category,
-                              new
-                              {
-                                  htmlAttributes = new { @class = "bg-danger" }
-                              })
-                            <br />
-                            <strong>Seek Medical Attention Immediately</strong>
-                        </h4>
-                    </div>
-                }
+                <div class="alert alert-danger alert-dismissible fade in" name="alertmessage" id="alertmessage">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <span class="glyphicon glyphicon-alert logo"></span>
+                    <strong> Danger!</strong> Your results indicate you <strong>must</strong> seek medical attendion immediately
+                </div>
+            }
 
-              @if (Model.BP.Category == BPCategory.High1 || Model.BP.Category == BPCategory.High2)
-                {
+            @if (Model.BP.Category == BPCategory.High1 || Model.BP.Category == BPCategory.High2)
+            {
 
-                    <div class="badge alert-warning" name="result">
-                        <h4>
-                            @Html.DisplayFor(model => model.BP.Category,
-                                new
-                                {
-                                    htmlAttributes = new { @class = "alert-warning" }
-                                })
-                        </h4>
-                    </div>
-
-                }
-
-               @if (Model.BP.Category == BPCategory.Normal || Model.BP.Category == BPCategory.Elevated)
-                {
-
-                    <div class="badge alert-success" name="result">
-                        <h4>
-                            @Html.DisplayFor(model => model.BP.Category,
-                                new
-                                {
-                                    htmlAttributes = new { @class = "alert-info" }
-                                })
-                        </h4>
-                    </div>
-
-                }
-
+                <div class="alert alert-warning alert-dismissible fade in" name="alertMessage" id="alertmessage">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <span class="glyphicon glyphicon-exclamation-sign logo"></span>
+                    <strong> Warning!</strong> Your results indicate you need to adjust your health profile.
+                </div>
 
             }
-        </form>
-    </div>
+      </div>
+     }
+
+
+
 </div>
 
 @section Scripts {
