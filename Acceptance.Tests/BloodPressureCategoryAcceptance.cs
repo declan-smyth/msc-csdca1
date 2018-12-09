@@ -507,25 +507,25 @@ namespace BPCalculator.AcceptanceTest.BloodPressure
             //
             // Complete the Values for the Systolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Systolic"), "");
+            this.InputFieldUpdates(By.Id("BP_Systolic"), "100");
 
 
             //
             // Complete the values for the Diastolic Input Field
             //
-            this.InputFieldUpdates(By.Id("BP_Diastolic"), "400");
+            this.InputFieldUpdates(By.Id("BP_Diastolic"), "120");
 
 
             //
             // Get the result from the element being tested
             //
-            var elementResult = driver.FindElement(By.Name("errormessage-systolic"));
+            var elementResult = driver.FindElement(By.Id("validation-summary-errors"));
 
 
             //
             // That the returned values to ensure it matches the expected value
             //
-            Assert.IsTrue(elementResult.Text.Contains("Invalid Systolic Value"), "Verify that an invlaid value error condition is captured");
+            Assert.IsTrue(elementResult.Text.Contains("Systolic must be greater than Diastolic"), "Verify tha an error message is displayed if the Systolic is less than Diastolic");
 
         }
 

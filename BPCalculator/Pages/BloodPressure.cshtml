@@ -15,9 +15,9 @@
 <p>This application will calculate the Blood Pressure Category based on the values you provide below.</p>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post" id="form1">
-            <div asp-validation-summary="ModelOnly" class="text-warning"></div>
+    <form method="post" id="form1">
+        <div class="col-md-4">
+
             <div class="form-group">
                 <label asp-for="BP.Systolic" class="control-label"></label>
                 <input asp-for="BP.Systolic" class="form-control" onchange="this.form.submit()" />
@@ -28,22 +28,23 @@
                 <input asp-for="BP.Diastolic" class="form-control" onchange="this.form.submit()" />
                 <span asp-validation-for="BP.Diastolic" class="text-danger" name="errormessage-diastolic"></span>
             </div>
-        </form>
 
-    </div>
-    @if (ViewData.ModelState.IsValid)
-    {
-        <div class="col-md-5 ">
+            <div asp-validation-summary="ModelOnly" class="panel panel-warning page-header" id="validation-summary-errors"></div>
+        </div>
+        @if (ViewData.ModelState.IsValid)
+        {
+            <div class="form-group col-md-5">
 
-            <div class="panel panel-primary" name="results" id="results">
-                <div class="panel-heading text-uppercase"><strong>Your results</strong></div>
-                <div class="panel-body tex">
-                    Based on the information you have provided we have calculated your blood pressure category as:<br />
-                    <span class="text-uppercase"><strong>@Html.DisplayFor(model => model.BP.Category)</strong> </span>
+                <div class="panel panel-primary" name="results" id="results">
+                    <div class="panel-heading text-uppercase"><strong>Your results</strong></div>
+                    <div class="panel-body">
+                        Based on the information you have provided we have calculated your blood pressure category as:<br />
+                        <span class="text-uppercase"><strong>@Html.DisplayFor(model => model.BP.Category)</strong> </span>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </form>
 </div>
 
 <div class="row">
@@ -72,9 +73,6 @@
             }
       </div>
      }
-
-
-
 </div>
 
 @section Scripts {
