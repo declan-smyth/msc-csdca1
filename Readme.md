@@ -8,6 +8,8 @@
 ### Status Information
 [![Build status](https://dev.azure.com/declansmyth/msc-csdca1/_apis/build/status/CI-Build-Pipeline)](https://dev.azure.com/declansmyth/msc-csdca1/_build/latest?definitionId=5)
 
+[![Production Status](https://vsrm.dev.azure.com/declansmyth/_apis/public/Release/badge/6e221c7a-ac99-4b0f-b31d-8c363cea26c7/4/6)](https://vsrm.dev.azure.com/declansmyth/_apis/public/Release/badge/6e221c7a-ac99-4b0f-b31d-8c363cea26c7/4/6)
+
 [![Code Reliability](https://sonarcloud.io/api/project_badges/measure?project=declan-smyth_msc-csdca1&metric=reliability_rating)](https://sonarcloud.io/api/project_badges/measure?project=declan-smyth_msc-csdca1&metric=reliability_rating)
 
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=declan-smyth_msc-csdca1&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=declan-smyth_msc-csdca1&metric=alert_status)
@@ -20,7 +22,7 @@ The blood pressure calculator application is a .Net Razor application based on M
 * Azure DevOps
 * Microsoft Azure platform for hosting of the website
 
-## Implementation Approach
+## Code Design
 
 
 ## Build & Release Design
@@ -47,7 +49,7 @@ The pipeline is designed to build and ut was desinit test the application on a s
 #### Application Compile, Test and Publish
 The application is compiled using the DOTNET Core task. This task has a number of commands will build, test and publish your web applications applications.  Unit testing is completed as part of the build with 50+ tests executed covering 90% of the new code added for the Blood Pressure Category calculations. 
 
-During the development of the pipeline, I found that code coverage was not automatically available in a publishable format as the output from the Test Task produced a binary .coverage file. This file was loaded to the build information and could be downloaded and** opened outside of the pipeline.  
+During the development of the pipeline, I found that code coverage was not automatically available in a publishable format as the output from the Test Task produced a binary .coverage file. This file was loaded to the build information and could be downloaded and opened outside of the pipeline.  
 **Note:** Code coverage collectors were only added to the DOTNET Core SDK in release 2.1.400 with a limitation that they can only run on Windows based build servers.
 
 #### Code Quality Analysis
@@ -57,7 +59,7 @@ Code Analysis is being performed by Sonar Cloud and nDepend. The tools were impl
 The Sonar Cloud project used for code quality analysis is the [msc-cadca1 project ](https://sonarcloud.io/dashboard?id=declan-smyth_msc-csdca1). This tool is linked to the GITHub repository for analysis cand provides information on:
 * Bugs
 * Code Smells
-* Coverage
+* Coverage  
 The tool provide a widget that is availalbe in the Azure DevOps Dashboard. It is possible to get code coverage information both additional manipulation of the .coverage is required for the information to be available for analysis
 
 ##### nDepend
@@ -89,16 +91,20 @@ The Azure Platform, also provides deployment slots that are used in the release 
 The production slot is main application web URL, we use a slot swap to move from Stage into Production as part of the release pipline
 
 #### Stage: Development
-The development pipeline will deploy the application into a 
+The development pipeline will deploy the application into a Development Slot on the Azure Platform and run a selection of Selenium Tests. The tests are controlled with with a runsettings file that points to the url of the slot to use for testing.
 
 #### Stage: Acceptance Test
+The Acceptance Test stage pipeline will deploy the application into a Testing Slot on the Azure Platform and run a selection of Selenium Tests. The tests are controlled with with a runsettings file that points to the url of the slot to use for testing.
+
+This stage also has a post-deployment check to validate that there are no open Severity 1 or Sererity 2 issues open before proceeding to the next stage
 
 #### Stage: Staging & Performance Test
+The Staging & Performance Test stage runs a Quick Performance Load test in the staging environment. If the load test passes the web application will result in a pre-approval email being sent for approval for the build to be moved to production
+
+![Release Pipeline - Pre-approval](images/release-pipeline-pass-pendingapproval.png)
 
 #### Stage: Production
-
-
-
+After the release is approved the build is moved into production using a __Slot Swap__ from the Stage Slot.
 
 ---
 # New Features
