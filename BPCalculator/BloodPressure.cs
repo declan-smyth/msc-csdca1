@@ -2,10 +2,13 @@
 
 namespace BPCalculator
 {
-    // BP categories
+   /// <summary>
+   ///  Blood Pressure Category enumeration
+   ///  Additional categories added based on the UK NHS breakdown
+   /// </summary>
     public enum BPCategory
     {
-        [Display (Name = "")] None,
+        [Display(Name = "No Blood Pressure Calculated")] None,
         [Display(Name="Low Blood Pressure")] Low,
         [Display(Name="Normal Blood Pressure")]  Normal,
         [Display(Name="Elevated Blood Pressure")] Elevated,
@@ -21,13 +24,17 @@ namespace BPCalculator
         public const int DiastolicMin = 40;
         public const int DiastolicMax = 130;
 
-        [Range(SystolicMin, SystolicMax, ErrorMessage = "Invalid Systolic Value")]
+        [Range(SystolicMin, SystolicMax, ErrorMessage = "Invalid Systolic Value provided")]
         public int Systolic { get; set; }                       // mmHG
 
-        [Range(DiastolicMin, DiastolicMax, ErrorMessage = "Invalid Diastolic Value")]
+        [Range(DiastolicMin, DiastolicMax, ErrorMessage = "Invalid Diastolic Value provided")]
         public int Diastolic { get; set; }                      // mmHG
 
-        // calculate BP category
+        
+        /// <summary>
+        /// Returns the blood pressure category based on the 
+        /// Systolic Value and Diastolic Value provided
+        /// </summary>
         public BPCategory Category
         {
             get
@@ -41,49 +48,76 @@ namespace BPCalculator
                 if (this.IsNormalPressure()) { rtnValue = BPCategory.Normal; }
                 if (this.IsLowPressure()) { rtnValue = BPCategory.Low; }
 
-
                 return rtnValue;
             }
         }
 
+        /// <summary>
+        /// Method to indciate if the Blood Pressure is Low
+        /// </summary>
+        /// <returns>bool</returns>
         private bool IsLowPressure()
         {
             return (this.Diastolic < 60) || (this.Systolic < 90);
         }
 
+        /// <summary>
+        /// Method to indciate if the Blood Pressure is Normal
+        /// </summary>
+        /// <returns>bool</returns>
         private bool IsNormalPressure()
         {
-            bool v = (this.Diastolic > 60 && this.Diastolic < 80);
-            return v && (this.Systolic > 80 && this.Systolic < 120);
+            if (this.Systolic > 80 && this.Systolic < 120)
+            {
+                return true;
+            }
+
+            return (this.Diastolic >= 60 && this.Diastolic < 80);
         }
 
+        /// <summary>
+        /// Method to indiciate if the Blood Pressue is Elevated
+        /// </summary>
+        /// <returns>bool</returns>
         private bool IsElevatedPressure()
         {
 
             return ((this.Diastolic > 60 && this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130));
         }
 
+        /// <summary>
+        /// Method to indciate if the Blood Pressure is High Blood Pressure
+        /// </summary>
+        /// <returns></returns>
         private bool IsHigh1Pressure()
         {
            
-            if ((this.Diastolic < 80) && (this.Systolic >= 130 && this.Systolic < 140))
+            if (this.Systolic >= 130 && this.Systolic < 140)
             {
                 return true;
             }
-            return (this.Systolic < 180) && (this.Diastolic >= 80 && this.Diastolic < 90);
+            return (this.Diastolic >= 80 && this.Diastolic < 90);
 
         }
 
+        /// <summary>
+        /// Method to indciate if the Blood Pressure is High Blood Pressure
+        /// </summary>
+        /// <returns></returns>
         private bool IsHigh2Pressure()
         {
             
-            if ((this.Diastolic < 80) && (this.Systolic >= 140 && this.Systolic <= 180))
+            if (this.Systolic >= 140 && this.Systolic <= 180)
             {
                 return true;
             }
             return (this.Systolic < 180) && (this.Diastolic >= 90 && this.Diastolic <= 120);
         }
 
+        /// <summary>
+        /// Method to indciate if the Blood Pressure is Critical
+        /// </summary>
+        /// <returns>bool</returns>
         private bool IsCrisisPressure()
         {
             return this.Diastolic > 120 || this.Systolic > 180;

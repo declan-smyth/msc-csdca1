@@ -17,7 +17,6 @@
 <div class="row">
     <form method="post" id="form1">
         <div class="col-md-4">
-
             <div class="form-group">
                 <label asp-for="BP.Systolic" class="control-label"></label>
                 <input asp-for="BP.Systolic" class="form-control" onchange="this.form.submit()" />
@@ -29,7 +28,7 @@
                 <span asp-validation-for="BP.Diastolic" class="text-danger" name="errormessage-diastolic"></span>
             </div>
 
-            <div asp-validation-summary="ModelOnly" class="panel panel-warning page-header" id="validation-summary-errors"></div>
+            <div asp-validation-summary="ModelOnly" id="validation-summary-errors" class="text-warning"></div>
         </div>
         @if (ViewData.ModelState.IsValid)
         {
