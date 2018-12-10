@@ -16,13 +16,13 @@ steps:
   displayName: Restore
   inputs:
     command: restore
-    projects: '$(Parameters.RestoreBuildProjects)'
+    projects: '**/*.csproj'
 
 # Build the application
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: '$(Parameters.RestoreBuildProjects)'
+    projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
 # Test the application
@@ -30,8 +30,8 @@ steps:
   displayName: Test
   inputs:
     command: test
-    projects: '$(Parameters.TestProjects)'
-    arguments: '--configuration $(BuildConfiguration)  --filter $(TestFilterConfiguration) --collect "Code coverage"'
+    projects: '**/*Test/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --filter $(TestFilterConfiguration) --collect "Code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
 
 # Run ndepend code analysis
 - task: ndepend.ndependextension.ndepend-task.NDependTask@1
@@ -45,7 +45,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+    arguments: '--configuration $(BuildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY'
 
 # Publish Acceptance Tests. These will be used in the release pipeline
 - task: DotNetCoreCLI@2
