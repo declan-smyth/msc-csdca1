@@ -79,7 +79,7 @@ The release pipeline is comprised of the following stages:
 #### Azure Platform 
 The Azure platform is used for hosting the web application. The platform provides Web Application resource that will make the application available via a named url. The url for this application is  https://bpcalculator-dev-as.azurewebsites.net
 
-![Release Pipeline]("images/release-pipeline-stages.PNG")
+![Release Pipeline](images/release-pipeline-stages.PNG)
 
 The Azure Platform, also provides deployment slots that are used in the release pipeline to test the web application before it goes into produced.  In this pipeline we deploy a build into the following slots:
 * DEV    -> Used for testing of the application in a development environment
