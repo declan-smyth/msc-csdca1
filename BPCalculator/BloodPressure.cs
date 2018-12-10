@@ -42,12 +42,12 @@ namespace BPCalculator
                 BPCategory rtnValue = BPCategory.None;
 
                 if (this.IsCrisisPressure()) { return BPCategory.Crisis; }
+                if (this.IsLowPressure()) { return BPCategory.Low; }
                 if (this.IsHigh2Pressure()) { return  BPCategory.High2; }
                 if (this.IsHigh1Pressure()) { return  BPCategory.High1; }
-                if (this.IsElevatedPressure()) { return  BPCategory.Elevated; }
                 if (this.IsNormalPressure()) { return BPCategory.Normal; }
-                if (this.IsLowPressure()) { return BPCategory.Low; }
-
+                if (this.IsElevatedPressure()) { return  BPCategory.Elevated; }
+                
                 return rtnValue;
             }
         }
@@ -58,7 +58,7 @@ namespace BPCalculator
         /// <returns>bool</returns>
         private bool IsLowPressure()
         {
-            return (this.Diastolic < 60) || (this.Systolic < 90);
+            return (this.Diastolic < 60 || this.Systolic < 90);
         }
 
         /// <summary>
@@ -67,8 +67,9 @@ namespace BPCalculator
         /// <returns>bool</returns>
         private bool IsNormalPressure()
         {
-            bool v = (this.Diastolic >= 60 && this.Diastolic < 80);
-            return v && (this.Systolic > 80 && this.Systolic < 120);
+            bool v = (this.Systolic > 80 && this.Systolic < 120);
+            return v && (this.Diastolic >= 60 && this.Diastolic < 80);
+           
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace BPCalculator
         private bool IsElevatedPressure()
         {
 
-            return ((this.Diastolic > 60 && this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130));
+            return ((this.Diastolic >= 60 && this.Diastolic < 80) && (this.Systolic >= 120 && this.Systolic < 130));
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace BPCalculator
             {
                 return true;
             }
-            return ((this.Systolic < 180) && (this.Diastolic >= 90 && this.Diastolic <= 120));
+            return (this.Diastolic >= 90 && this.Diastolic <= 120);
         }
 
         /// <summary>
