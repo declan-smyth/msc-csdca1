@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
-
+    <ProjectGuid>{A12DC252-743F-4DF7-8A0D-56F78F0E45D5}</ProjectGuid>
     <Authors>Declan Smyth</Authors>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
