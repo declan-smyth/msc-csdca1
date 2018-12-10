@@ -31,13 +31,13 @@ steps:
   inputs:
     command: test
     projects: '**/*Test/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --filter $(TestFilterConfiguration) --collect "Code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
+    arguments: '--configuration $(BuildConfiguration)  --filter $(TestFilterConfiguration) --collect "Code coverage" --logger trx --results-directory $(Agent.TempDirectory)'
 
 # Run ndepend code analysis
-- task: ndepend.ndependextension.ndepend-task.NDependTask@1
-  displayName: 'Code Analysis'
-  inputs:
-    PullRequest2: true
+#- task: ndepend.ndependextension.ndepend-task.NDependTask@1
+#  displayName: 'Code Analysis'
+#  inputs:
+#    PullRequest2: true
 
 # Publish Web Application 
 - task: DotNetCoreCLI@2
@@ -45,7 +45,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
 
 # Publish Acceptance Tests. These will be used in the release pipeline
 - task: DotNetCoreCLI@2
