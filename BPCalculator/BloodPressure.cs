@@ -41,12 +41,12 @@ namespace BPCalculator
             {
                 BPCategory rtnValue = BPCategory.None;
 
-                if (this.IsCrisisPressure()) { rtnValue =  BPCategory.Crisis; }
-                if (this.IsHigh2Pressure()) { rtnValue =  BPCategory.High2; }
-                if (this.IsHigh1Pressure()) { rtnValue =  BPCategory.High1; }
-                if (this.IsElevatedPressure()) { rtnValue =  BPCategory.Elevated; }
-                if (this.IsNormalPressure()) { rtnValue = BPCategory.Normal; }
-                if (this.IsLowPressure()) { rtnValue = BPCategory.Low; }
+                if (this.IsCrisisPressure()) { return BPCategory.Crisis; }
+                if (this.IsHigh2Pressure()) { return  BPCategory.High2; }
+                if (this.IsHigh1Pressure()) { return  BPCategory.High1; }
+                if (this.IsElevatedPressure()) { return  BPCategory.Elevated; }
+                if (this.IsNormalPressure()) { return BPCategory.Normal; }
+                if (this.IsLowPressure()) { return BPCategory.Low; }
 
                 return rtnValue;
             }
@@ -67,7 +67,7 @@ namespace BPCalculator
         /// <returns>bool</returns>
         private bool IsNormalPressure()
         {
-            bool v = (this.Diastolic > 60 && this.Diastolic < 80);
+            bool v = (this.Diastolic >= 60 && this.Diastolic < 80);
             return v && (this.Systolic > 80 && this.Systolic < 120);
         }
 
@@ -107,7 +107,7 @@ namespace BPCalculator
             {
                 return true;
             }
-            return (this.Systolic < 180) && (this.Diastolic >= 90 && this.Diastolic <= 120);
+            return ((this.Systolic < 180) && (this.Diastolic >= 90 && this.Diastolic <= 120));
         }
 
         /// <summary>
