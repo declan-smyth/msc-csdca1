@@ -4,11 +4,80 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 pool:
-  vmImage: 'Hosted VS2017'
+  vmImage: 'vs2017-win2016'
 
 variables:
   buildConfiguration: 'Release'
+  TestFilterConfiguration: 'FullyQualifiedName~BPCalculator.UnitTest.BloodPressure.BloodPressureCategoryTests'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+# Restore packages needed for the build
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: '$(Parameters.RestoreBuildProjects)'
+
+# Build the application
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '$(Parameters.RestoreBuildProjects)'
+    arguments: '--configuration $(BuildConfiguration)'
+
+# Test the application
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '$(Parameters.TestProjects)'
+    arguments: '--configuration $(BuildConfiguration)  --filter $(TestFilterConfiguration) --collect "Code coverage"'
+
+# Run ndepend code analysis
+- task: ndepend.ndependextension.ndepend-task.NDependTask@1
+  displayName: 'Code Analysis'
+  inputs:
+    PullRequest2: true
+
+# Publish Web Application 
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Website'
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+
+# Publish Acceptance Tests. These will be used in the release pipeline
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Acceptance Tests'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: '**/*Acceptance*/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+
+# Publish Symbol Files
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    IndexSources: false
+    SymbolServerType: TeamServices
+    SymbolsProduct: '$(Build.DefinitionName)'
+    SymbolsVersion: '$(Build.BuildNumber)'
+
+# Copy runsettings files to the artifact staging location
+# These files will be used to run various tests in the release pipeline
+- task: CopyFiles@2
+  displayName: 'Copy runsettings files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '**/*.runsettings'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+# Publish Artifacts. These will be available to the Release Pipeline
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: bpcalculator
+  continueOnError: true
