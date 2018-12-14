@@ -117,7 +117,7 @@ These changes are in-line with information from the American Hearth Foundation, 
 * An improvement to the display of the calcualtion is placed on screen to improved the overall user experience and highlight the result
 * Two new alert messages have been added to provide additional information to the user
   * Warning message for people with High Blood Pressure. This is to encourage them to seek improvements to their lifestyle
-  * Danger message to alert the user that the information indicates a medical emergency. This is displayed in the case of Low Pressure and Hypertensive Crisis
+  * Danger message to alert the user that the information indicates a medical emergency. This is displayed in the case of Low Pressure and Hypertensive Crisiss
 
 
 ---
